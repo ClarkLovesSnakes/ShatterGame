@@ -1,4 +1,5 @@
 import random
+import pygame
 # Initialize the functions of the game before the game loop begins
 # This includes the previous high score and the lists of words
 
@@ -6,6 +7,7 @@ def createHighScores():
     # This will find the high score and keep it set
     highScoreFile = open("HighScore.txt")
     highScores = highScoreFile.readlines()
+    return highScores
 
 def createData():
     arrayOfOrderedWords = []
@@ -30,3 +32,13 @@ def pickWord(arrayOfOrderedWords, length):
 
     return chosenWord
 
+
+def loadImages():
+    imagesDict = {}
+    textArray = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "_"]
+
+    for i in range(len(26)):
+        filename = "Sprites/" + textArray[i] + ".png"
+        imagesDict[textArray[i]] = pygame.image.load(filename)
+
+    return imagesDict
