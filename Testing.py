@@ -1,6 +1,6 @@
 import pygame
 
-<<<<<<< HEAD
+
 class Game:
     def __init__(self):
         pass
@@ -62,4 +62,3 @@ while not done:
 
     pygame.display.flip()
     clock.tick(60)
->>>>>>> a101cc1292000df6dc2cc878495ded60d6e4600a
