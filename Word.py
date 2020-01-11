@@ -10,6 +10,7 @@ class Word :
         self.y = 0
         self.dy = speed
 
+
     def update(self):
         self.y += self.dy
         if self.y > 600 :
