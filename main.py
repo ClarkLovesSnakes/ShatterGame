@@ -1,7 +1,7 @@
 import pygame
 
 import Word
-
+import Game
 
 
 # initialize
