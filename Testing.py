@@ -24,3 +24,5 @@ main()
 
 for i in range(10):
     print(i)
+
+print("Elijah's Test")
