@@ -8,7 +8,7 @@ screen = pygame.display.set_mode((1000, 600))
 done = False
 is_blue = True
 x = 30
-y = 30
+y = 3
 
 clock = pygame.time.Clock()
 
