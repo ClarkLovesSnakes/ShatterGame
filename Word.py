@@ -9,12 +9,13 @@ class Word :
     def __init__(self, originalWord, speed, swaps, deletions):
 
         # inintialize variables
-        self.originalWord = originalWord
-        self.scrambledWord = originalWord
+        self.originalWord = list(originalWord)
+        self.scrambledWord = list(originalWord)
         self.x = randint(0, 1000)
         self.y = 0
         self.dy = speed
         self.active = True
+        self.offScreen = False
 
         length = len(originalWord)
 
@@ -22,9 +23,15 @@ class Word :
         for i in range(swaps) :
             swapPos1 = randint(0, length - 1)
             swapPos2 = randint(0, length - 1)
+            print(swapPos1, swapPos2)
             temp = self.scrambledWord[swapPos1]
             self.scrambledWord[swapPos1] = self.scrambledWord[swapPos2]
             self.scrambledWord[swapPos2] = temp
+
+        # execute deletions
+        for i in range(deletions) :
+            deletePos = randint(0, length - 1)
+            self.scrambledWord[deletePos] = "_"
 
 
     # should be called every frame before render
