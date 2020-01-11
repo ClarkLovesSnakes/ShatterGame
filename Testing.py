@@ -9,6 +9,7 @@ def main():
 
     screen = pygame.display.set_mode((1920,1080))
 
+    # COMMENT by josh
     running = True
 
     while running:
