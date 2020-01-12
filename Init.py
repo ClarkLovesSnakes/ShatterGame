@@ -20,6 +20,7 @@ def createData():
     for list in arrayOfOrderedWords:
         for i in range(len(list)):
             word = list[i].strip()
+            word = word.upper()
             list[i] = word
 
     return arrayOfOrderedWords
