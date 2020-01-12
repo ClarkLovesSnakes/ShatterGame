@@ -103,6 +103,8 @@ while not done:
                             gameState = 1
                         if i[2] == 1:
                             gameState = 2
+                        if i[2] == 3:
+                            done = True
         if gameState == 1 :
             if event.type == pygame.KEYDOWN:
                 if event.key >= pygame.K_a and event.key <= pygame.K_z and len(game.inputStream) < 12:
