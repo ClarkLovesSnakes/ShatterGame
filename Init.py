@@ -11,7 +11,7 @@ def createHighScores():
 
 def createData():
     arrayOfOrderedWords = []
-    for name in range(3,6):
+    for name in range(3,9):
         filename = "WordLists/" + str(name) +".txt"
         openedFile = open(filename)
         arrayOfOrderedWords.append(openedFile.readlines())
