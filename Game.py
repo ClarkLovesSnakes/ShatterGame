@@ -52,6 +52,10 @@ class Game:
         self.incrementLives()
         self.levelUpSound.play()
 
+    def incrementLives(self):
+        if self.lives < 5 :
+            self.lives += 1
+
     def incrementWordsCleared(self):
         self.wordsCleared += 1
         if self.wordsCleared >= 20:
@@ -64,10 +68,6 @@ class Game:
         self.lives -= 1
         self.loseLifeSound.play()
 
-    def incrementLives(self):
-        if self.lives < 5:
-            self.lives += 1
-
     def incrementScore(self, amount):
         self.score += amount
 
@@ -76,7 +76,8 @@ class Game:
         return random.randint(3, length)
 
     def getWord(self):
-        speed = 0.5 * random.randint(1, self.level)
+
+        length = 0
         swaps = 0
         deletions = 0
 
@@ -100,6 +101,14 @@ class Game:
             deletions = 1
         else:
             swaps = random.randint(0, self.level)
+
+        length = self.defineWordLength()
+        speedFactor = 0.4
+        if length > 3 :
+            speedFactor = 0.2
+        if length > 4 :
+            speedFactor = 0.1
+        speed = speedFactor * random.randint(1, self.level)
 
         return Word(Init.pickWord(self.dictionary, self.defineWordLength()), speed, swaps, deletions)
 

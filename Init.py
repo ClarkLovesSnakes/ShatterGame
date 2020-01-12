@@ -39,6 +39,10 @@ def createData():
     return arrayOfOrderedWords
 
 def pickWord(arrayOfOrderedWords, length):
+
+    if length > 8 :
+        length = 8
+
     chosenListIndex = length - 3
     chosenWordIndex = random.randint(0,len(arrayOfOrderedWords[chosenListIndex])-1)
 
