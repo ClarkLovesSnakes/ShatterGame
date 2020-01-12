@@ -49,6 +49,7 @@ class Game:
 
     def incrementLevel(self):
         self.level += 1
+        self.incrementLives()
         self.levelUpSound.play()
 
     def incrementWordsCleared(self):
@@ -62,6 +63,10 @@ class Game:
         self.hurt = True
         self.lives -= 1
         self.loseLifeSound.play()
+
+    def incrementLives(self):
+        if self.lives < 5:
+            self.lives += 1
 
     def incrementScore(self, amount):
         self.score += amount
