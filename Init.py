@@ -16,6 +16,7 @@ def createHighScores():
     return highScores
 
 def addHighScores(listOfScores):
+    pass
     highScoreFile = open("HighScore.txt", "w")
     for i in listOfScores:
         highScoreFile.write(i)
