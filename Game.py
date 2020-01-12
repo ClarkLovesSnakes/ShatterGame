@@ -33,6 +33,11 @@ class Game:
         self.enterPressed = False
         self.running = True
 
+        # hurt animation variables
+        self.hurt = False
+        self.hurtFrameCount = 0
+        self.hurtAlpha = 0
+
 
     def setLevel(self,newLevel):
         self.level = newLevel
@@ -48,9 +53,8 @@ class Game:
             self.wordsCleared = 0
 
     def decrementLives(self):
+        self.hurt = True
         self.lives -= 1
-        if self.lives <= 0:
-            self.gameState = 1
 
     def incrementScore(self, amount):
         self.score += amount
@@ -115,14 +119,15 @@ class Game:
                 # check user input
                 if self.selectedInput != "":
                     if self.selectedInput == "".join(self.words[i].originalWord):
-                        self.words[i].active = False
+                        self.words[i].shatter()
 
                 if self.words[i].offScreen or not (self.words[i].active):
-                    if self.words[i].offScreen :
+                    if self.words[i].offScreen:
                         self.decrementLives()
-                    if not (self.words[i].active) :
+                    if not (self.words[i].active):
                         self.incrementWordsCleared()
-                        self.incrementScore(10 * len(self.words[i].originalWord) + 5 * self.words[i].swaps + 15 * self.words[i].deletions)
+                        self.incrementScore(
+                            10 * len(self.words[i].originalWord) + 5 * self.words[i].swaps + 15 * self.words[i].deletions)
                     del self.words[i]
 
             # draw images
@@ -132,6 +137,27 @@ class Game:
             # refresh selected input
             self.selectedInput = ""
 
+            # draw hurt animation
+            if self.hurt:
+
+                if self.hurtFrameCount >= 8:
+                    self.hurtAlpha -= 20
+                else:
+                    self.hurtAlpha += 20
+
+                hurtSurface = pygame.Surface((1000, 530))
+                hurtSurface.set_alpha(self.hurtAlpha)
+                hurtSurface.fill((255, 0, 0))
+                screen.blit(hurtSurface, (0, 0))
+                self.hurtFrameCount += 1
+                if self.hurtFrameCount > 15:
+
+                    self.hurt = False
+                    self.hurtFrameCount = 0
+                    self.hurtAlpha = 0
+
+                    if self.lives <= 0:
+                        self.gameState = 1
 
             # conrol panel
 
