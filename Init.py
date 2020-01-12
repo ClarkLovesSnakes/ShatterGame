@@ -39,6 +39,6 @@ def loadImages():
 
     for i in textArray:
         filename = "Sprites/" + i + ".png"
-        imagesDict[textArray[i]] = pygame.image.load(filename)
+        imagesDict[i] = pygame.image.load(filename)
 
     return imagesDict
