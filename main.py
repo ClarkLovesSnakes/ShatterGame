@@ -77,9 +77,19 @@ chlt7 = [pygame.font.Font('freesansbold.ttf', 50).render('6', True, white), [600
 chlt8 = [pygame.font.Font('freesansbold.ttf', 50).render('7', True, white), [700-pygame.font.Font('freesansbold.ttf', 50).render('7', True, white).get_rect().width/2,250]]
 chlt9 = [pygame.font.Font('freesansbold.ttf', 50).render('8', True, white), [800-pygame.font.Font('freesansbold.ttf', 50).render('8', True, white).get_rect().width/2,250]]
 chlt10 = [pygame.font.Font('freesansbold.ttf', 50).render('9', True, white), [900-pygame.font.Font('freesansbold.ttf', 50).render('9', True, white).get_rect().width/2,250]]
-
-
 chooseLevelTexts = [chlt1,chlt2,chlt3,chlt4,chlt5,chlt6,chlt7,chlt8,chlt9,chlt10]
+
+#About Text
+abt1 = [pygame.font.Font('freesansbold.ttf', 20).render('SHATTER WAS WRITTEN BY', True, white), [500-pygame.font.Font('freesansbold.ttf', 20).render('SHATTER WAS WRITTEN BY', True, white).get_rect().width/2,75]]
+abt2 = [pygame.font.Font('freesansbold.ttf', 20).render('JOSHUA GIBBONS', True, white), [500-pygame.font.Font('freesansbold.ttf', 20).render('JOSHUA GIBBONS', True, white).get_rect().width/2,150]]
+abt3 = [pygame.font.Font('freesansbold.ttf', 20).render('CLARK HENSLEY', True, white), [500-pygame.font.Font('freesansbold.ttf', 20).render('CLARK HENSLEY', True, white).get_rect().width/2,225]]
+abt4 = [pygame.font.Font('freesansbold.ttf', 20).render('ELIJAH MAGEE', True, white), [500-pygame.font.Font('freesansbold.ttf', 20).render('ELIJAH MAGEE', True, white).get_rect().width/2,300]]
+
+aboutTexts = [abt1,abt2,abt3,abt4]
+
+
+
+
 
 def dist(p1,p2):
     return ( (p1[0]-p2[0])**2 + (p1[1]-p2[1])**2 )** .5
@@ -103,6 +113,8 @@ while not done:
                             gameState = 1
                         if i[2] == 1:
                             gameState = 2
+                        if i[2] == 2:
+                            gameState = 3
                         if i[2] == 3:
                             done = True
         if gameState == 1 :
@@ -125,6 +137,13 @@ while not done:
                     if dist(mousePos, chooseLevelTexts[i][1]) < 40:
                         game = Game(i, screen, heart, 0, 0, 5, 0, Init.createHighScores())
                         gameState = 1
+
+        if gameState == 3:
+            if event.type == pygame.MOUSEBUTTONDOWN :
+                mouseClick = True
+            if event.type == pygame.MOUSEBUTTONUP and mouseClick:
+                mouseClick = False
+                gameState = 0
 
     gameTime += 1
     gameTime %= 60
@@ -170,6 +189,11 @@ while not done:
                         screen.blit(chooseLevelTexts[i][0], chooseLevelTexts[i][1])
                 else:
                     screen.blit(chooseLevelTexts[i][0], chooseLevelTexts[i][1])
+
+    elif gameState == 3:
+        screen.fill((0, 0, 0))
+        for i in range(len(aboutTexts)):
+                screen.blit(aboutTexts[i][0], aboutTexts[i][1])
 
     pygame.display.flip()
     clock.tick(60)
