@@ -212,7 +212,10 @@ class Game:
 
             screen.fill((0, 0, 0))
 
+
+            finalInstruction = pygame.font.Font("freesansbold.ttf", 70).render("YOU GOT A HIGH SCORE! ENTER YOUR NAME!", True, (255, 255, 255), (0,0,0))
             finalDisplay = pygame.font.Font("freesansbold.ttf", 60).render(self.inputStream, True, (127, 255, 127), (0, 0, 0))
+            screen.blit(finalInstruction, ((500 - ((finalInstruction.get_rect().width) / 2)), 300))
             screen.blit(finalDisplay, ((500 - ((finalDisplay.get_rect().width) / 2)), 540))
 
             if self.enterPressed:
