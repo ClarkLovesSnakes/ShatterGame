@@ -1,4 +1,5 @@
 import pygame
+import random
 
 #TODO
 pygame.init()
@@ -35,6 +36,40 @@ class Game:
         self.lives -= 1
         if self.lives <= 0:
             print("Dead")
+
+    def incrementScore(self):
+        self.score += 0
+
+    def defineWordLength(self):
+        length = self.level/2.0
+        length = 2  + round(length)
+
+    def getWord(self):
+        speed = 0.5 * random.randint(1, self.level)
+        swaps = 0
+        deletions = 0
+
+        isDeletingOne = False
+        isDeletingTwo = False
+
+        if self.level >= 10:
+            randDelete = random.randint(1,10)
+            if randDelete == 10:
+                isDeletingOne = True
+            elif randDelete == 9:
+                isDeletingTwo = True
+        elif self.level >= 5:
+            randDelete = random.randint(1,10)
+            if randDelete == 10:
+                isDeletingOne = True
+
+        if isDeletingTwo:
+            deletions = 2
+        elif isDeletingOne:
+            deletions = 1
+        else:
+            swaps = random.randint(0, self.level)
+
 
     def draw(self):
 
