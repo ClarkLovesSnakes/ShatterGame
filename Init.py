@@ -34,6 +34,12 @@ def pickWord(arrayOfOrderedWords, length):
     return chosenWord
 
 
+def loadHeart():
+    filename = "Heart/heart.png"
+    heartSprite = pygame.transform.scale(pygame.image.load(filename), (30, 30))
+
+    return heartSprite
+
 def loadImages():
     imagesDict = {}
     textArray = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "_"]
