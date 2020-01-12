@@ -23,6 +23,11 @@ class Game:
         self.gameState = gameState
         self.highScores = highScores
 
+        # sound objects
+        self.shatterSound = pygame.mixer.Sound("Sounds/correct.wav")
+        self.levelUpSound = pygame.mixer.Sound("Sounds/levelUp.wav")
+        self.loseLifeSound = pygame.mixer.Sound("Sounds/loseLife.wav")
+
         # game state variables
         self.dictionary = Init.createData()
         self.images = Init.loadImages()
@@ -44,6 +49,7 @@ class Game:
 
     def incrementLevel(self):
         self.level += 1
+        self.levelUpSound.play()
 
     def incrementWordsCleared(self):
         self.wordsCleared += 1
@@ -55,6 +61,7 @@ class Game:
     def decrementLives(self):
         self.hurt = True
         self.lives -= 1
+        self.loseLifeSound.play()
 
     def incrementScore(self, amount):
         self.score += amount
@@ -119,6 +126,7 @@ class Game:
                 # check user input
                 if self.selectedInput != "":
                     if self.selectedInput == "".join(self.words[i].originalWord):
+                        self.shatterSound.play()
                         self.words[i].shatter()
 
                 if self.words[i].offScreen or not (self.words[i].active):
