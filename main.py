@@ -1,11 +1,13 @@
 import pygame
 
 from Game import Game
+import Init
 
 # initialize
 # set screen size
 
 pygame.init()
+pygame.font.get_fonts()
 screen = pygame.display.set_mode((1000, 600))
 done = False
 
@@ -14,6 +16,8 @@ clock = pygame.time.Clock()
 gameState = 0
 gameTime = 0
 game = None
+
+highScores = Init.createHighScores()
 
 heart = pygame.transform.scale(pygame.image.load("Heart/heart.png"), (30, 30))
 
@@ -42,12 +46,24 @@ text3 = [pygame.font.Font('freesansbold.ttf', 50).render('LEVEL', True, white), 
 text4 = [pygame.font.Font('freesansbold.ttf', 50).render('ABOUT', True, white), [100,421]]
 text5 = [pygame.font.Font('freesansbold.ttf', 50).render('QUIT', True, white), [446,421]]
 text6 = [pygame.font.Font('freesansbold.ttf', 35).render('HIGHSCORES', True, white, black), [700,130]]
-text7 = [pygame.font.Font('freesansbold.ttf', 20).render('Elijah            5280', True, white, black), [700,200]]
-text8 = [pygame.font.Font('freesansbold.ttf', 20).render('Elijah            5223', True, white, black), [700,230]]
-text9 = [pygame.font.Font('freesansbold.ttf', 20).render('Elijah            5145', True, white, black), [700,260]]
-text10 = [pygame.font.Font('freesansbold.ttf', 20).render('Elijah            4980', True, white, black), [700,290]]
-text11 = [pygame.font.Font('freesansbold.ttf', 20).render('Josh              23', True, white, black), [700,320]]
-texts = [text2,text3,text4,text5,text6,text7,text8,text9,text10,text11]
+
+def highScoreList(highScores):
+    text7 = [pygame.font.SysFont("freesansbold.ttf", 30).render(highScores[0], True, white, black), [700,200]]
+    text8 = [pygame.font.SysFont("freesansbold.ttf", 30).render(highScores[2], True, white, black), [700,230]]
+    text9 = [pygame.font.SysFont("freesansbold.ttf", 30).render(highScores[4], True, white, black), [700,260]]
+    text10 = [pygame.font.SysFont("freesansbold.ttf", 30).render(highScores[6], True, white, black), [700,290]]
+    text11 = [pygame.font.SysFont("freesansbold.ttf", 30).render(highScores[8], True, white, black), [700,320]]
+    text12 = [pygame.font.SysFont("freesansbold.ttf", 30).render(highScores[1], True, white, black), [900,200]]
+    text13 = [pygame.font.SysFont("freesansbold.ttf", 30).render(highScores[3], True, white, black), [900,230]]
+    text14 = [pygame.font.SysFont("freesansbold.ttf", 30).render(highScores[5], True, white, black), [900,260]]
+    text15 = [pygame.font.SysFont("freesansbold.ttf", 30).render(highScores[7], True, white, black), [900,290]]
+    text16 = [pygame.font.SysFont("freesansbold.ttf", 30).render(highScores[9], True, white, black), [900,320]]
+
+    return text7, text8, text9, text10, text11, text12, text13, text14, text15, text16
+
+text7, text8, text9, text10, text11, text12, text13, text14, text15, text16 = highScoreList(highScores)
+
+texts = [text2,text3,text4,text5,text6,text7,text8,text9,text10,text11, text12, text13, text14, text15, text16]
 
 #Choose Level Screen
 chlt1 = [pygame.font.Font('freesansbold.ttf', 50).render('CHOOSE LEVEL', True, white), [500-pygame.font.Font('freesansbold.ttf', 50).render('CHOOSE LEVEL', True, white).get_rect().width/2,75]]
@@ -83,28 +99,29 @@ while not done:
                     if (mousePos[0] > i[0] and mousePos[0] < i[0] + 250 and mousePos[1] > i[1] and mousePos[1] < i[1] + 150):
                         # start button pressed
                         if i[2] == 0 :
-                            game = Game(1, screen, heart, 0, 0, 5)
+                            game = Game(1, screen, heart, 0, 0, 5, 0, Init.createHighScores())
                             gameState = 1
                         if i[2] == 1:
                             gameState = 2
         if gameState == 1 :
             if event.type == pygame.KEYDOWN:
-                if event.key >= pygame.K_a and event.key <= pygame.K_z:
+                if event.key >= pygame.K_a and event.key <= pygame.K_z and len(game.inputStream) < 12:
                     game.inputStream = game.inputStream + chr(event.key).upper()
                 elif event.key == pygame.K_RETURN:
                     game.selectedInput = game.inputStream
                     game.inputStream = ""
+                    game.toggleEnter()
                 elif event.key == pygame.K_BACKSPACE :
                     game.inputStream = game.inputStream[:len(game.inputStream) - 1]
 
-        if gameState ==2:
+        if gameState == 2:
             if event.type == pygame.MOUSEBUTTONDOWN :
                 mouseClick = True
             if event.type == pygame.MOUSEBUTTONUP and mouseClick:
                 mouseClick = False
                 for i in range(len(chooseLevelTexts)):
                     if dist(mousePos, chooseLevelTexts[i][1]) < 40:
-                        game = Game(i, screen, heart, 0, 0, 5)
+                        game = Game(i, screen, heart, 0, 0, 5, 0, Init.createHighScores())
                         gameState = 1
 
     gameTime += 1
@@ -112,6 +129,10 @@ while not done:
 
 
     if gameState == 0 :
+
+        text7, text8, text9, text10, text11, text12, text13, text14, text15, text16 = highScoreList(highScores)
+
+        texts = [text2, text3, text4, text5, text6, text7, text8, text9, text10, text11, text12, text13, text14, text15, text16]
 
         mousePos = pygame.mouse.get_pos()
 
@@ -132,8 +153,11 @@ while not done:
 
     # run game loop
     elif gameState == 1 :
-
-        game.loop_game()
+        if game.running == True:
+            game.loop_game()
+        else:
+            highScores = Init.createHighScores()
+            gameState = 0
 
     elif gameState == 2:
         mousePos = pygame.mouse.get_pos()

@@ -5,9 +5,22 @@ import pygame
 
 def createHighScores():
     # This will find the high score and keep it set
+    highScores = []
     highScoreFile = open("HighScore.txt")
     highScores = highScoreFile.readlines()
+    for i in range(len(highScores)):
+        highScores[i] = highScores[i].strip()
+
+    #for i in range(0, len(highScoresTemp), 2):
+        #highScores.append([highScoresTemp[i], highScoresTemp[i + 1]])
     return highScores
+
+def addHighScores(listOfScores):
+    highScoreFile = open("HighScore.txt", "w")
+    for i in listOfScores:
+        highScoreFile.write(i)
+        highScoreFile.write("\n")
+    highScoreFile.close()
 
 def createData():
     arrayOfOrderedWords = []
