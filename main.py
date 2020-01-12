@@ -1,7 +1,6 @@
 import pygame
 
-from Word import Word
-#from Game import Game
+from Game import Game
 
 # initialize
 # set screen size
@@ -12,13 +11,16 @@ done = False
 
 clock = pygame.time.Clock()
 
-gameState = 0;
-gameTime = 0;
+gameState = 0
+gameTime = 0
+game = None
+
+heart = pygame.transform.scale(pygame.image.load("Heart/heart.png"), (30, 30))
 
 button1 = [66,133,0]
-button2 = [382,133,0]
-button3 = [66,366,0]
-button4 = [382,366,1]
+button2 = [382,133,1]
+button3 = [66,366,2]
+button4 = [382,366,3]
 buttons = [button1,button2,button3,button4]
 
 color = (255, 100, 0)
@@ -48,46 +50,55 @@ while not done:
 
 
     for event in pygame.event.get():
+
         if event.type == pygame.QUIT:
             done = True
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-            is_blue = not is_blue
 
-        if event.type == pygame.MOUSEBUTTONUP:
-            for i in buttons:
-                if (mousePos[0] > i[0] and mousePos[0] < i[0] + 250 and mousePos[1] > i[1] and mousePos[1] < i[1] + 150):
-                    done = i[2]
+        if gameState == 0 :
+            if event.type == pygame.MOUSEBUTTONUP:
+                for i in buttons:
+                    if (mousePos[0] > i[0] and mousePos[0] < i[0] + 250 and mousePos[1] > i[1] and mousePos[1] < i[1] + 150):
+                        # start button pressed
+                        if i[2] == 0 :
+                            game = Game(1, screen, heart, 0, 0, 5)
+                            gameState = 1
+
+        if gameState == 1 :
+            if event.type == pygame.KEYDOWN:
+                if event.key >= pygame.K_a and event.key <= pygame.K_z:
+                    game.inputStream = game.inputStream + chr(event.key).upper()
+                elif event.key == pygame.K_RETURN:
+                    game.selectedInput = game.inputStream
+                    game.inputStream = ""
+                elif event.key == pygame.K_BACKSPACE :
+                    game.inputStream = game.inputStream[:len(game.inputStream) - 1]
+
+    if gameState == 0 :
+
+        gameTime += 1
+        gameTime %= 60
+
+        mousePos = pygame.mouse.get_pos()
+
+        screen.fill((0, 0, 0))
+        color = (255, 100, 0)
+
+        for i in buttons:
+            pygame.draw.rect(screen, color, pygame.Rect(i[0], i[1], 250, 150))
+            if (mousePos[0] > i[0] and mousePos[0] < i[0]+250 and mousePos[1] > i[1] and mousePos[1] < i[1]+150) :
+                #pygame.draw.rect(screen, [color[0],color[1]+80,color[2]+80], pygame.Rect(i[0], i[1], 250+30, 150+30))
+                pygame.draw.rect(screen,[color[0],color[1]+80,color[2]+80], pygame.Rect(i[0], i[1], 250, 150))
+
+        if gameTime < 30:
+            screen.blit(text, textRect)
+        for i in range(len(texts)):
+                screen.blit(texts[i][0], texts[i][1])
 
 
-    gameTime += 1
-    gameTime %= 60
+    # run game loop
+    elif gameState == 1 :
 
-
-    pressed = pygame.key.get_pressed()
-    if pressed[pygame.K_UP]: textRect[0] += 10
-    if pressed[pygame.K_DOWN]: y += 3
-    if pressed[pygame.K_LEFT]: x -= 3
-    if pressed[pygame.K_RIGHT]: x += 3
-
-    mousePos = pygame.mouse.get_pos()
-
-
-    screen.fill((0, 0, 0))
-    color = (255, 100, 0)
-
-    for i in buttons:
-        pygame.draw.rect(screen, color, pygame.Rect(i[0], i[1], 250, 150))
-        if (mousePos[0] > i[0] and mousePos[0] < i[0]+250 and mousePos[1] > i[1] and mousePos[1] < i[1]+150) :
-            #pygame.draw.rect(screen, [color[0],color[1]+80,color[2]+80], pygame.Rect(i[0], i[1], 250+30, 150+30))
-            pygame.draw.rect(screen,[color[0],color[1]+80,color[2]+80], pygame.Rect(i[0], i[1], 250, 150))
-
-    if gameTime < 30:
-        screen.blit(text, textRect)
-    for i in range(len(texts)):
-            screen.blit(texts[i][0], texts[i][1])
-
-
-
+        game.loop_game()
 
 
     pygame.display.flip()
