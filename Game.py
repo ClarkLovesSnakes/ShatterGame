@@ -28,7 +28,9 @@ class Game:
 
 
     def draw(self, varString = "", score = 0):
-        fontDisp = pygame.font.Font("freesansbold.ttf", 25)
+        fontDisp = pygame.font.Font('freesansbold.ttf', 25)
+
+
         fontType = pygame.font.Font("freesansbold.ttf", 35)
         currentLevelDisplay = fontDisp.render("LEVEL " + str(self.level), True, (255, 255, 255), (255, 100, 0))
         typingDisplay = fontType.render(varString, True, (127, 255, 127), (255, 100,0))
