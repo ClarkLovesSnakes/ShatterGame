@@ -196,10 +196,10 @@ class Game:
             levelText = pygame.font.Font('freesansbold.ttf', 50).render("LEVEL " + str(self.level), True, (255, 255, 255), (0, 0, 0))
             scoreText = pygame.font.Font('freesansbold.ttf', 50).render("YOUR SCORE: " + str(self.score), True, (255, 255, 255), (0, 0, 0))
             finalText = pygame.font.Font('freesansbold.ttf', 50).render("PRESS ENTER TO CONTINUE", True, (255, 255, 255), (0, 0, 0))
-            self.screen.blit(gameOverText, ((500 - ((gameOverText.get_rect().width) / 2)), 130))
-            self.screen.blit(levelText, ((500 - ((levelText.get_rect().width) / 2)), 340))
-            self.screen.blit(scoreText, ((500 - ((scoreText.get_rect().width) / 2)), 400))
-            self.screen.blit(finalText, ((500 - ((finalText.get_rect().width) / 2)), 550))
+            self.screen.blit(gameOverText, ((500 - ((gameOverText.get_rect().width) / 2)), 100))
+            self.screen.blit(levelText, ((500 - ((levelText.get_rect().width) / 2)), 290))
+            self.screen.blit(scoreText, ((500 - ((scoreText.get_rect().width) / 2)), 350))
+            self.screen.blit(finalText, ((500 - ((finalText.get_rect().width) / 2)), 500))
 
             if self.enterPressed:
                 if self.score > int(self.highScores[9]):
@@ -221,7 +221,7 @@ class Game:
             screen.fill((0, 0, 0))
 
 
-            finalInstruction = pygame.font.Font("freesansbold.ttf", 70).render("YOU GOT A HIGH SCORE! ENTER YOUR NAME!", True, (255, 255, 255), (0,0,0))
+            finalInstruction = pygame.font.Font("freesansbold.ttf", 35).render("YOU GOT A HIGH SCORE! ENTER YOUR NAME!", True, (255, 255, 255), (0,0,0))
             finalDisplay = pygame.font.Font("freesansbold.ttf", 60).render(self.inputStream, True, (127, 255, 127), (0, 0, 0))
             screen.blit(finalInstruction, ((500 - ((finalInstruction.get_rect().width) / 2)), 300))
             screen.blit(finalDisplay, ((500 - ((finalDisplay.get_rect().width) / 2)), 540))
