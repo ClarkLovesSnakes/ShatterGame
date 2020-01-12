@@ -58,7 +58,7 @@ class Game:
 
     def incrementWordsCleared(self):
         self.wordsCleared += 1
-        if self.wordsCleared >= 20:
+        if self.wordsCleared >= 15:
 
             self.incrementLevel()
             self.wordsCleared = 0
