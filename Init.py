@@ -39,6 +39,6 @@ def loadImages():
 
     for i in textArray:
         filename = "Sprites/" + i + ".png"
-        imagesDict[i] = pygame.image.load(filename)
+        imagesDict[i] = pygame.transform.scale(pygame.image.load(filename), (25, 25))
 
     return imagesDict
